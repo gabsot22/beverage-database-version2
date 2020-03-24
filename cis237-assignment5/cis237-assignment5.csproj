@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beverage.cs" />
-    <Compile Include="BeverageCollection.cs" />
+    <Compile Include="BeverageRepository.cs" />
     <Compile Include="BeverageContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

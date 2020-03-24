@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace cis237_assignment5
 {
-    class BeverageCollection
+    class BeverageRepository
     {
+        // Make new instance of the BeverageContext
+        BeverageContext _beverageContext = new BeverageContext();
+
         // Private Variables
         private Beverage[] beverages;
         private int beverageLength;
 
         // Constructor. Must pass the size of the collection.
-        public BeverageCollection(int size)
+        public BeverageRepository(int size)
         {
             this.beverages = new Beverage[size];
             this.beverageLength = 0;
@@ -58,23 +61,33 @@ namespace cis237_assignment5
             // Declare return string for the possible found item
             string returnString = null;
 
-            // For each Beverage in beverages
-            foreach (Beverage beverage in beverages)
-            {
-                // If the beverage is not null
-                if (beverage != null)
-                {
-                    // If the beverage Id is the same as the search Id
-                    //if (beverage.Id == id)
-                    {
-                        // Set the return string to the result
-                        // of the beverage's ToString method.
-                        returnString = beverage.ToString();
-                    }
-                }
-            }
+            Beverage _beverageToFind = _beverageContext.Beverages.Where(beverage => beverage.id == id).First();
+
+            returnString = BeverageToString(_beverageToFind);
+
+          
+            //// For each Beverage in beverages
+            //foreach (Beverage beverage in beverages)
+            //{
+            //    // If the beverage is not null
+            //    if (beverage != null)
+            //    {
+            //        // If the beverage Id is the same as the search Id
+            //        if (beverage.Id == id)
+            //        {
+            //            // Set the return string to the result
+            //            // of the beverage's ToString method.
+            //            returnString = beverage.ToString();
+            //        }
+            //    }
+            //}
             // Return the returnString
             return returnString;
+        }
+
+        static string BeverageToString(Beverage beverage)
+        {
+            return $"{beverage.id} {beverage.name} {beverage.pack} {beverage.price} {beverage.active}";
         }
     }
 }

@@ -57,7 +57,7 @@ namespace cis237_assignment5
         public string GetSearchQuery()
         {
             Console.WriteLine();
-            Console.WriteLine("What would you like to search for?");
+            Console.WriteLine("Enter Beverage ID");
             Console.Write("> ");
             return Console.ReadLine();
         }
@@ -167,7 +167,7 @@ namespace cis237_assignment5
             Console.WriteLine("What would you like to do?");
             Console.WriteLine();
             Console.WriteLine("1. Print Beverages");
-            Console.WriteLine("2. Print The Entire List Of Items");
+            Console.WriteLine("2. Search for Beverage by ID");
             Console.WriteLine("3. Search For An Item");
             Console.WriteLine("4. Add New Item To The List");
             Console.WriteLine("5. Exit Program");
