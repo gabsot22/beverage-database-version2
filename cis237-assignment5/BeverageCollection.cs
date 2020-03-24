@@ -29,7 +29,7 @@ namespace cis237_assignment5
         )
         {
             // Add a new Beverage to the collection. Increase the Length variable.
-            beverages[beverageLength] = new Beverage(id, name, pack, price, active);
+            //beverages[beverageLength] = new Beverage(id, name, pack, price, active);
             beverageLength++;
         }
 
@@ -65,7 +65,7 @@ namespace cis237_assignment5
                 if (beverage != null)
                 {
                     // If the beverage Id is the same as the search Id
-                    if (beverage.Id == id)
+                    //if (beverage.Id == id)
                     {
                         // Set the return string to the result
                         // of the beverage's ToString method.

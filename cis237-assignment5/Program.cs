@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace cis237_assignment5
 {
@@ -18,17 +19,14 @@ namespace cis237_assignment5
             // Set a constant for the size of the collection
             const int beverageCollectionSize = 4000;
 
-            // Set a constant for the path to the CSV File
-            const string pathToCSVFile = "../../../datafiles/beverage_list.csv";
-
             // Create an instance of the UserInterface class
             UserInterface userInterface = new UserInterface();
 
             // Create an instance of the BeverageCollection class
             BeverageCollection beverageCollection = new BeverageCollection(beverageCollectionSize);
 
-            // Create an instance of the CSVProcessor class
-            CSVProcessor csvProcessor = new CSVProcessor();
+            // Make new instance of the BeverageContext
+            BeverageContext _beverageContext = new BeverageContext();
 
             // Display the Welcome Message to the user
             userInterface.DisplayWelcomeGreeting();
@@ -43,17 +41,13 @@ namespace cis237_assignment5
                 switch (choice)
                 {
                     case 1:
-                        // Load the CSV File
-                        bool success = csvProcessor.ImportCSV(beverageCollection, pathToCSVFile);
-                        if (success)
+                        // Print the entire list of beverages
+                        Console.WriteLine(userInterface.GetItemHeader()); 
+
+                        Console.WriteLine("Print the list of beverages");
+                        foreach (Beverage beverage in _beverageContext.Beverages)
                         {
-                            // Display Success Message
-                            userInterface.DisplayImportSuccess();
-                        }
-                        else
-                        {
-                            // Display Fail Message
-                            userInterface.DisplayImportError();
+                            Console.WriteLine(BeverageToString(beverage));
                         }
                         break;
 
@@ -110,6 +104,11 @@ namespace cis237_assignment5
                 // Get the new choice of what to do from the user
                 choice = userInterface.DisplayMenuAndGetResponse();
             }
+        }
+
+        static string BeverageToString(Beverage beverage)
+        {
+            return $"{beverage.id} {beverage.name} {beverage.pack} {beverage.price} {beverage.active}";
         }
     }
 }

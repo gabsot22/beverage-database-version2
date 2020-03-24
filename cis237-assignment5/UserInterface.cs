@@ -166,7 +166,7 @@ namespace cis237_assignment5
             Console.WriteLine();
             Console.WriteLine("What would you like to do?");
             Console.WriteLine();
-            Console.WriteLine("1. Load Wine List From CSV");
+            Console.WriteLine("1. Print Beverages");
             Console.WriteLine("2. Print The Entire List Of Items");
             Console.WriteLine("3. Search For An Item");
             Console.WriteLine("4. Add New Item To The List");
@@ -306,7 +306,7 @@ namespace cis237_assignment5
         }
 
         // Get a string formatted as a header for items
-        private string GetItemHeader()
+        public string GetItemHeader()
         {
             return String.Format(
                 "{0,-6} {1,-55} {2,-15} {3,6} {4,-6}",

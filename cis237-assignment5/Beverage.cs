@@ -1,53 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace cis237_assignment5
 {
-    class Beverage
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Beverage
     {
-        // Private Class Level Variables
-        private string id;
-        private string name;
-        private string pack;
-        private decimal price;
-        private bool active;
+        [StringLength(10)]
+        public string id { get; set; }
 
-        // Public Property to get the Id
-        public string Id
-        {
-            get
-            {
-                return this.id;
-            }
-        }
+        [Required]
+        [StringLength(100)]
+        public string name { get; set; }
 
-        // Default Constructor
-        public Beverage() { }
+        [Required]
+        [StringLength(20)]
+        public string pack { get; set; }
 
-        // 5 Parameter Constructor
-        public Beverage(string id, string name, string pack, decimal price, bool active)
-        {
-            this.id = id;
-            this.name = name;
-            this.pack = pack;
-            this.price = price;
-            this.active = active;
-        }
+        [Column(TypeName = "money")]
+        public decimal price { get; set; }
 
-        // Override ToString Method to concatenate the fields together.
-        public override string ToString()
-        {
-            return String.Format(
-                "{0,6} {1,-55} {2,-15} {3,6} {4,-6}",
-                this.id,
-                this.name,
-                this.pack,
-                this.price,
-                this.active ? "True" : "False"
-            );
-        }
+        public bool active { get; set; }
     }
 }
