@@ -26,7 +26,7 @@ namespace cis237_assignment5
             BeverageRepository beverageRepository = new BeverageRepository(beverageRepositorySize);
 
             // Make new instance of the BeverageContext
-            BeverageContext _beverageContext = new BeverageContext();
+            //BeverageContext _beverageContext = new BeverageContext();
 
             // Display the Welcome Message to the user
             userInterface.DisplayWelcomeGreeting();
@@ -36,42 +36,20 @@ namespace cis237_assignment5
             int choice = userInterface.DisplayMenuAndGetResponse();
 
             // While the choice is not exit program
-            while (choice != 5)
+            while (choice != 6)
             {
                 switch (choice)
                 {
                     case 1:
                         // Print the entire list of beverages
-
-                        Console.WriteLine("Print the list of beverages");
-                        foreach (Beverage beverage in _beverageContext.Beverages)
-                        {
-                            Console.WriteLine(BeverageToString(beverage));
-                        }
-                        // Print Entire List Of Items
-                        //string allItemsString = beverageCollection.ToString();
-                        //if (!String.IsNullOrWhiteSpace(allItemsString))
-                        //{
-                        //    // Display all of the items
-                        //    userInterface.DisplayAllItems(allItemsString);
-                        //}
-                        //else
-                        //{
-                        //    // Display error message for all items
-                        //    userInterface.DisplayAllItemsError();
-                        //}
+                        beverageRepository.PrintList();
+                                                                                              
                         break;
 
                     case 2:
-                        /* Call the where method on the Cars table and pass in a lambda expression
-                        for the criteria we are looking for. There is nothing special about the word
-                        car in the part that read: car => car.id == "V0...". It could be
-                        any characters we want it to be.
-                        It is just a variable name for the current car we are considering
-                        in the expression. This will automatically loop through all the cars,
-                        and run the expression against each of them. WHen the result is finally
-                        true, it will return that car */
+                        
 
+                        
                         // Search for beverage by id
                         string searchQuery = userInterface.GetSearchQuery();
 
@@ -88,37 +66,73 @@ namespace cis237_assignment5
                         break;
 
                     case 3:
-                        // Search For An Item
-                        //string searchQuery = userInterface.GetSearchQuery();
-                        //string itemInformation = beverageRepository.FindById(searchQuery);
-                        //if (itemInformation != null)
+                        // Add A New Beverage To The DataBase
+
+                        // Create a new instance of Beverage
+                        Beverage newBeverageToAdd = new Beverage();
+
+                        newBeverageToAdd.id = userInterface.GetNewIDInformation();
+                        string findBeverage = newBeverageToAdd.id;
+                        newBeverageToAdd.name = userInterface.GetNewNameInformation();
+                        newBeverageToAdd.pack = userInterface.GetNewPackInformation();
+                        newBeverageToAdd.price = userInterface.GetNewPriceInformation();
+                        newBeverageToAdd.active = userInterface.GetNewActiveInformation();
+
+                        beverageRepository.AddNewBeverage(newBeverageToAdd.id, 
+                                                          newBeverageToAdd.name,
+                                                          newBeverageToAdd.pack,
+                                                          newBeverageToAdd.price,
+                                                          newBeverageToAdd.active, newBeverageToAdd);
+
+                        //// Use a try catch to ensure that they can't add a car with an id that already exists
+                        //try
                         //{
-                        //    userInterface.DisplayItemFound(itemInformation);
+                        //    // Add the new beverage to the Beverage Collection
+                        //    _beverageContext.Beverages.Add(newBeverageToAdd);
+
+                        //    // Saving the changes to the database
+                        //    _beverageContext.SaveChanges();
                         //}
-                        //else
+                        //catch(DbUpdateException e)
                         //{
-                        //    userInterface.DisplayItemFoundError();
+                        //    // Remove the new beverage form the Beverages Collection since we can't save it.
+                        //    // Dont want it to hang around the next time to saveChanges
+                        //    _beverageContext.Beverages.Remove(newBeverageToAdd);
+                        //    // Error message
+                        //    userInterface.DisplayItemAlreadyExistsError();
                         //}
+                        //catch(Exception e)
+                        //{
+                        //    // Remove the new beverage form the Beverages Collection since we can't save it.
+                        //    // Dont want it to hang around the next time to saveChanges
+                        //    _beverageContext.Beverages.Remove(newBeverageToAdd);
+                        //    // Error message
+                        //    userInterface.DisplayItemAlreadyExistsError2();
+                        //}
+
+                        //// Fetch out the record we just added and ensure that it exists
+                        //Console.WriteLine();
+                        //Console.WriteLine();
+                        //Console.WriteLine("Just added a new beverage. Going to fetch it and print to verify");
+                        //Console.WriteLine();
+
+                        
                         break;
 
                     case 4:
-                        // Add A New Item To The List
-                        string[] newItemInformation = userInterface.GetNewItemInformation();
-                        if (beverageRepository.FindById(newItemInformation[0]) == null)
-                        {
-                            beverageRepository.AddNewItem(
-                                newItemInformation[0],
-                                newItemInformation[1],
-                                newItemInformation[2],
-                                decimal.Parse(newItemInformation[3]),
-                                (newItemInformation[4] == "True")
-                            );
-                            userInterface.DisplayAddWineItemSuccess();
-                        }
-                        else
-                        {
-                            userInterface.DisplayItemAlreadyExistsError();
-                        }
+                        // UPDATE THE BEVERAGE THAT WAS JUST ADDED
+                        string value = userInterface.GetUpdateBeverageInformation();
+
+                        beverageRepository.UpdateBeverage(value);
+
+                        break;
+                    case 5:
+                        // DELETE A BEVERAGE
+
+                        string deletedValue = userInterface.GetDeleteBeverageInformation();
+
+                        beverageRepository.DeleteBeverage(deletedValue);
+
                         break;
                 }
 
