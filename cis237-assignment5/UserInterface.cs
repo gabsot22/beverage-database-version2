@@ -70,8 +70,6 @@ namespace cis237_assignment5
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Item Found!");
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(this.GetItemHeader());
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(itemInformation);
         }
@@ -132,11 +130,23 @@ namespace cis237_assignment5
             Console.WriteLine("6. Exit Program");
         }
 
+        public void DisplayPrintListHeading()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("******************************");
+            Console.WriteLine("Printing the list of beverages");
+            Console.WriteLine("******************************");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine();
+        }
+
         // Display the Prompt
         private void DisplayPrompt()
         {
             Console.WriteLine();
             Console.Write("Enter Your Choice: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         // Display the Error Message
@@ -145,6 +155,51 @@ namespace cis237_assignment5
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("That is not a valid option. Please make a valid choice");
+        }
+
+        // Output the beverage to update
+        public void DisplayUpdateBeverageHeading()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("About to do an update on this beverage");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine();
+        }
+
+        // Output the beverage to verify it got updated
+        public void DisplayFinalHeadingAddBeverage()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Outputting the updated beverage to make sure update worked");
+        }
+
+        public void DisplayDeleteBeverageHeading1()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;          
+            Console.WriteLine("Deleted the added beverage. Looking to see if it is still in the database");
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        public void DisplayDeleteBeverageError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("The beverage you're looking for does not exist");
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        public void DisplayBeverageStillInDataBase()
+        {
+            Console.WriteLine("Beverage is still in the database");
+        }
+
+        public void DisplayDeleteBeverageSuccession()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Item deleted");
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         // Get the selection from the user
@@ -185,35 +240,37 @@ namespace cis237_assignment5
         //************************************************************
 
 
-        // Get a valid string field from the console
+        // Get a valid decimal field from the console and parse it to a string
         public string GetNewIDInformation()
         {
             Console.WriteLine("What is the new Beverage's ID");
-            string value = null;
+
+            decimal value = 0;
             bool valid = false;
             while (!valid)
             {
-                value = Console.ReadLine();
-                if (!String.IsNullOrWhiteSpace(value))
+                try
                 {
+                    value = decimal.Parse(Console.ReadLine());
                     valid = true;
                 }
-                else
+                catch (Exception)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You must provide a value.");
+                    Console.WriteLine("That is not a valid Decimal. Please enter a valid Decimal.");
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine();
                     Console.WriteLine("What is the new Beverage's ID");
                     Console.Write("> ");
                 }
             }
-            return value;
+            return value.ToString();
         }
 
         // Get a valid string field from the console
         public string GetNewNameInformation()
         {
+            Console.WriteLine();
             Console.WriteLine("What is the new Beverage's Name");
             string value = null;
             bool valid = false;
@@ -295,7 +352,7 @@ namespace cis237_assignment5
         // Get a valid bool field from the console
         public bool GetNewActiveInformation()
         {
-            Console.WriteLine("Should the Beverage be Active? (T/F)");
+            Console.WriteLine("Should the Beverage be Active? (Y/N)");
             string input = null;
             bool value = false;
             bool valid = false;
@@ -325,26 +382,26 @@ namespace cis237_assignment5
         public string GetUpdateBeverageInformation()
         {
             Console.WriteLine("Enter Beverage ID to update");
-            string value = null;
+            decimal value = 0;
             bool valid = false;
             while (!valid)
             {
-                value = Console.ReadLine();
-                if (!String.IsNullOrWhiteSpace(value))
+                try
                 {
+                    value = decimal.Parse(Console.ReadLine());
                     valid = true;
                 }
-                else
+                catch (Exception)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You must provide a value.");
+                    Console.WriteLine("That is not a valid Decimal. Please enter a valid Decimal.");
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine();
                     Console.WriteLine("Enter Beverage ID to update");
                     Console.Write("> ");
                 }
             }
-            return value;
+            return value.ToString();
         }
 
         // Get a valid string field from the console

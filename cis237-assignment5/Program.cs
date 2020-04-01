@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* Gabe Soto
+ * CIS 237 MW 6:00-8:15pm
+ * 4/1/20
+ **/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,17 +20,11 @@ namespace cis237_assignment5
             Console.WindowHeight = 40;
             Console.WindowWidth = 120;
 
-            // Set a constant for the size of the collection
-            const int beverageRepositorySize = 4000;
-
             // Create an instance of the UserInterface class
             UserInterface userInterface = new UserInterface();
 
             // Create an instance of the BeverageCollection class
-            BeverageRepository beverageRepository = new BeverageRepository(beverageRepositorySize);
-
-            // Make new instance of the BeverageContext
-            //BeverageContext _beverageContext = new BeverageContext();
+            BeverageRepository beverageRepository = new BeverageRepository();
 
             // Display the Welcome Message to the user
             userInterface.DisplayWelcomeGreeting();
@@ -41,109 +39,71 @@ namespace cis237_assignment5
                 switch (choice)
                 {
                     case 1:
-                        // Print the entire list of beverages
+                        // PRINT THE ENTIRE LIST OF BEVERAGES
+
+                        // Heading
+                        userInterface.DisplayPrintListHeading();
+                        // Call method to print the list
                         beverageRepository.PrintList();
                                                                                               
                         break;
 
                     case 2:
-                        
-
-                        
-                        // Search for beverage by id
+                        // SEARCH FOR BEVERAGE BY ID
                         string searchQuery = userInterface.GetSearchQuery();
-
+                        //  Finds beverage and sets it to a string to test
                         string itemInformation = beverageRepository.FindById(searchQuery);
+                        // Tests if it was found or not
                         if (itemInformation != null)
                         {
                             userInterface.DisplayItemFound(itemInformation);
-                        }
-                        else
-                        {
-                            userInterface.DisplayItemFoundError();
                         }
                         
                         break;
 
                     case 3:
-                        // Add A New Beverage To The DataBase
+                        // ADD A NEW BEVERAGE TO THE DATABASE
 
                         // Create a new instance of Beverage
                         Beverage newBeverageToAdd = new Beverage();
 
+                        // Gathers information for the beverage
                         newBeverageToAdd.id = userInterface.GetNewIDInformation();
-                        string findBeverage = newBeverageToAdd.id;
                         newBeverageToAdd.name = userInterface.GetNewNameInformation();
                         newBeverageToAdd.pack = userInterface.GetNewPackInformation();
                         newBeverageToAdd.price = userInterface.GetNewPriceInformation();
                         newBeverageToAdd.active = userInterface.GetNewActiveInformation();
 
+                        // Calls method and passes in the new beverage information
                         beverageRepository.AddNewBeverage(newBeverageToAdd.id, 
                                                           newBeverageToAdd.name,
                                                           newBeverageToAdd.pack,
                                                           newBeverageToAdd.price,
-                                                          newBeverageToAdd.active, newBeverageToAdd);
-
-                        //// Use a try catch to ensure that they can't add a car with an id that already exists
-                        //try
-                        //{
-                        //    // Add the new beverage to the Beverage Collection
-                        //    _beverageContext.Beverages.Add(newBeverageToAdd);
-
-                        //    // Saving the changes to the database
-                        //    _beverageContext.SaveChanges();
-                        //}
-                        //catch(DbUpdateException e)
-                        //{
-                        //    // Remove the new beverage form the Beverages Collection since we can't save it.
-                        //    // Dont want it to hang around the next time to saveChanges
-                        //    _beverageContext.Beverages.Remove(newBeverageToAdd);
-                        //    // Error message
-                        //    userInterface.DisplayItemAlreadyExistsError();
-                        //}
-                        //catch(Exception e)
-                        //{
-                        //    // Remove the new beverage form the Beverages Collection since we can't save it.
-                        //    // Dont want it to hang around the next time to saveChanges
-                        //    _beverageContext.Beverages.Remove(newBeverageToAdd);
-                        //    // Error message
-                        //    userInterface.DisplayItemAlreadyExistsError2();
-                        //}
-
-                        //// Fetch out the record we just added and ensure that it exists
-                        //Console.WriteLine();
-                        //Console.WriteLine();
-                        //Console.WriteLine("Just added a new beverage. Going to fetch it and print to verify");
-                        //Console.WriteLine();
-
-                        
+                                                          newBeverageToAdd.active, newBeverageToAdd);  
                         break;
 
                     case 4:
                         // UPDATE THE BEVERAGE THAT WAS JUST ADDED
                         string value = userInterface.GetUpdateBeverageInformation();
 
+                        // Calls method to update passing in the value of the previous method called
                         beverageRepository.UpdateBeverage(value);
 
                         break;
                     case 5:
                         // DELETE A BEVERAGE
 
+                        // User picks what droid to delete
                         string deletedValue = userInterface.GetDeleteBeverageInformation();
 
+                        // Deletes beverage by calling method
                         beverageRepository.DeleteBeverage(deletedValue);
-
                         break;
                 }
 
                 // Get the new choice of what to do from the user
                 choice = userInterface.DisplayMenuAndGetResponse();
             }
-        }
-
-        static string BeverageToString(Beverage beverage)
-        {
-            return $"{beverage.id} {beverage.name} {beverage.pack} {beverage.price} {beverage.active}";
         }
     }
 }

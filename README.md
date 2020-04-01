@@ -4,7 +4,7 @@
 
 ## Author
 
-
+Gabriel Soto
 
 ## Description
 
@@ -85,6 +85,7 @@ Solution Requirements:
 
 ## Outside Resources Used
 
-
+Inclass 5 and youtube
 
 ## Known Problems, Issues, And/Or Errors in the Program
+No known problems
